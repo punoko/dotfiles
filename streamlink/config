@@ -1,0 +1,8 @@
+player=mpv
+default-stream=best
+verbose
+
+twitch-disable-hosting
+twitch-disable-ads
+# put the OAuth token in a separate config.twitch file
+# twitch-api-header=Authorization=OAuth ******************************
