@@ -22,7 +22,7 @@ class Symlink:
 def main():
     symlink = Symlink()
 
-    for item in ["zshrc"]:
+    for item in ["zshrc", "gnupg/gpg-agent.conf"]:
         src = os.path.join(DOTFILES, item)
         dst = os.path.join(HOME, f".{item}")
         symlink.make(src, dst)
