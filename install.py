@@ -10,7 +10,7 @@ class Symlink:
         self.backup_dir = os.path.join(DOTFILES, "backup", date)
 
     def make(self, src: str, dst: str) -> None:
-        if os.path.exists(dst):
+        if os.path.lexists(dst):
             os.makedirs(self.backup_dir, exist_ok=True)
             backup = os.path.join(self.backup_dir, os.path.basename(dst))
             os.rename(dst, backup)
