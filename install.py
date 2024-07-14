@@ -18,6 +18,7 @@ class Symlink:
             backup = os.path.join(self.backup_dir, os.path.basename(dst))
             os.rename(dst, backup)
             logger.info(f"created {os.path.relpath(backup)}")
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
         os.symlink(src, dst)
         logger.info(f"symlinked {dst} -> {src}")
 
