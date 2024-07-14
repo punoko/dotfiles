@@ -11,12 +11,15 @@ class Symlink:
 
     def make(self, src: str, dst: str) -> None:
         if os.path.lexists(dst):
+            if os.path.realpath(dst) == src:
+                logger.info(f"OK {dst}")
+                return
             os.makedirs(self.backup_dir, exist_ok=True)
             backup = os.path.join(self.backup_dir, os.path.basename(dst))
             os.rename(dst, backup)
             logger.info(f"created {os.path.relpath(backup)}")
         os.symlink(src, dst)
-        logger.info(f"{dst} -> {src}")
+        logger.info(f"symlinked {dst} -> {src}")
 
 
 def main():
