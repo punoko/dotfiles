@@ -38,12 +38,16 @@ alias ll='ls -l'
 alias la='ls -la'
 alias lh='ls -lAh'
 
-KERNEL=$(uname -s)
-function islinux() [[ $KERNEL == "Linux" ]]
-function isdarwin() [[ $KERNEL == "Darwin" ]]
+KERNEL_NAME=$(uname -s)
+function islinux() [[ $KERNEL_NAME == "Linux" ]]
+function isdarwin() [[ $KERNEL_NAME == "Darwin" ]]
 
 # MACOS
 if isdarwin; then
+  if ! type /opt/homebrew/bin/brew >/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
   # ANISBLE https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#running-on-macos
   export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 fi
