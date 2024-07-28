@@ -42,15 +42,13 @@ KERNEL_NAME=$(uname -s)
 function islinux() [[ $KERNEL_NAME == "Linux" ]]
 function isdarwin() [[ $KERNEL_NAME == "Darwin" ]]
 
-# MACOS
-if isdarwin; then
-  if ! type /opt/homebrew/bin/brew >/dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  fi
-  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-  # ANISBLE https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#running-on-macos
-  export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+# HOMEBREW
+if isdarwin && ! type /opt/homebrew/bin/brew >/dev/null; then
+  echo 'Do you want to install Homebrew? [y/N]'
+  HOMEBREW_URL='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+  read -s -q && /bin/bash -c "$(curl -fsSL $HOMEBREW_URL)"
 fi
+type /opt/homebrew/bin/brew >/dev/null && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 # GNU UTILS ON MACOS
 if isdarwin && [ -n "$HOMEBREW_PREFIX" ]; then
@@ -116,16 +114,6 @@ if type direnv >/dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
-# YUBIKEY
-if type gpgconf >/dev/null; then
-  gpgconf --launch gpg-agent
-  export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
-fi
-if type ykman >/dev/null; then
-  alias yubion='ykman config usb -e OTP'
-  alias yubioff='ykman config usb -d OTP'
-fi
-
 # KUBERNETES
 if type kubectl >/dev/null; then
   alias k='kubectl'
@@ -135,7 +123,26 @@ if type kubectl >/dev/null; then
 fi
 
 # PYTHON VENV
-[ -f "$HOME/.venv/bin/activate" ] && VIRTUAL_ENV_DISABLE_PROMPT=true source "$HOME/.venv/bin/activate"
+if [ -f "$HOME/.venv/bin/activate" ]; then
+  VIRTUAL_ENV_DISABLE_PROMPT=true source "$HOME/.venv/bin/activate"
+fi
+
+# ANISBLE https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#running-on-macos
+if isdarwin && type ansible >/dev/null; then
+  export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+fi
 
 # LOCAL CONFIG
-[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
+# YUBIKEY // put this in .zshrc.local to enable yubikey support
+# if type gpgconf >/dev/null && [ $USER != "root" ]; then
+#   gpgconf --launch gpg-agent
+#   export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+# fi
+# if type ykman >/dev/null; then
+#   alias yubion='ykman config usb -e OTP'
+#   alias yubioff='ykman config usb -d OTP'
+# fi
