@@ -22,16 +22,6 @@ bindkey '^[[F' end-of-line           # end
 bindkey '^[[H' beginning-of-line     # home
 bindkey '^[[Z' reverse-menu-complete # shift+tab
 
-# EDITOR
-if type nvim >/dev/null; then
-  EDITOR=nvim
-  VISUAL=nvim
-  alias vi='nvim '
-  alias vim='nvim '
-fi
-export EDITOR=${EDITOR:-vim}
-export VISUAL=${VISUAL:-vim}
-
 # LS
 alias ls='ls --color=auto '
 alias ll='ls -l'
@@ -44,11 +34,21 @@ function isdarwin() [[ $KERNEL_NAME == "Darwin" ]]
 
 # HOMEBREW
 if isdarwin && ! type /opt/homebrew/bin/brew >/dev/null; then
-  echo 'Do you want to install Homebrew? [y/N]'
+  echo 'Run the following command to install Homebrew'
   HOMEBREW_URL='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
-  read -s -q && /bin/bash -c "$(curl -fsSL $HOMEBREW_URL)"
+  echo '/bin/bash -c "$(curl -fsSL '$HOMEBREW_URL')"'
 fi
 type /opt/homebrew/bin/brew >/dev/null && eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+# EDITOR
+if type nvim >/dev/null; then
+  EDITOR=nvim
+  VISUAL=nvim
+  alias vi='nvim '
+  alias vim='nvim '
+fi
+export EDITOR=${EDITOR:-vim}
+export VISUAL=${VISUAL:-vim}
 
 # GNU UTILS ON MACOS
 if isdarwin && [ -n "$HOMEBREW_PREFIX" ]; then
