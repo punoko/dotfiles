@@ -37,7 +37,7 @@ def main():
         symlink.make(src, dst)
 
     is_darwin = os.uname().sysname == "Darwin"
-    for item in ["streamlink"]:
+    for item in ["streamlink", "Code/User/keybindings.json", "Code/User/settings.json"]:
         config_dir = "Library/Application Support" if is_darwin else ".config"
         src = os.path.join(DOTFILES, item)
         dst = os.path.join(HOME, config_dir, item)
