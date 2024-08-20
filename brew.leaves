@@ -3,9 +3,9 @@ bind
 coreutils
 direnv
 findutils
+fzf
 gnu-sed
 gnupg
-go
 grep
 htop
 int128/kubelogin/kubelogin
@@ -17,7 +17,6 @@ mpv
 mtr
 neofetch
 neovim
-node
 oha
 openssh
 openstackclient
@@ -26,7 +25,6 @@ pinentry-mac
 podman
 pssh
 pwgen
-python-requests
 restic
 shellcheck
 shfmt
@@ -41,3 +39,4 @@ ykman
 yq
 zsh-autosuggestions
 zsh-completions
+zsh-syntax-highlighting
