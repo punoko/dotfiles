@@ -4,6 +4,7 @@ setopt AUTO_CD
 setopt CORRECT
 setopt NOTIFY
 setopt NO_HUP
+setopt INTERACTIVE_COMMENTS
 
 # HISTORY
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
