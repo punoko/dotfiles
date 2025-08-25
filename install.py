@@ -26,12 +26,12 @@ class Symlink:
 def main():
     symlink = Symlink()
 
-    for item in ["zshrc", "gnupg/gpg.conf", "gnupg/gpg-agent.conf"]:
+    for item in ["gnupg/gpg.conf", "gnupg/gpg-agent.conf"]:
         src = os.path.join(DOTFILES, item)
         dst = os.path.join(HOME, f".{item}")
         symlink.make(src, dst)
 
-    for item in ["mpv", "wezterm", "zed"]:
+    for item in ["fish", "mpv"]:
         src = os.path.join(DOTFILES, item)
         dst = os.path.join(HOME, ".config", item)
         symlink.make(src, dst)
